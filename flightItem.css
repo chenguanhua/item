@@ -1,0 +1,32 @@
+#QID1 > div.Inner.BorderColor.DragAndDrop > div > fieldset > div > table > tbody > tr > td.groupsContainerTd.BorderColor > div:nth-child(0) > div
+{
+    float: left;
+    width:33%;
+}
+
+#QID1 > div.Inner.BorderColor.DragAndDrop > div > fieldset > div > table > tbody > tr > td.groupsContainerTd.BorderColor > div:nth-child(1) > div
+{
+    float: left;
+    width:33%;
+}
+
+#QID1 > div.Inner.BorderColor.DragAndDrop > div > fieldset > div > table > tbody > tr > td.groupsContainerTd.BorderColor > div:nth-child(2) > div
+{
+    float: left;
+    width:33%;
+}
+
+#QID1group0
+{
+    width:100%;
+}
+
+#QID1group1
+{
+    width:100%;
+}
+
+#QID1group2
+{
+    width:100%;
+}

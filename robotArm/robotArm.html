@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="robotArm.js"></script>
+    <style type="text/css">
+        * { padding: 0; margin: 0; border: 0; }
+        input {
+            text-align: center;
+        }
+        #choices{
+            width:200px;
+            height:300px;
+            border-style: solid;
+            border-width: 5px;
+            float: left;
+        }
+        #codes{
+            width:200px;
+            height:800px;
+            border-style: solid;
+            border-width: 5px;
+            float: left;
+        }
+        #canvas{
+            width:800px;
+            height:800px;
+            border: 3px solid #000000;
+        }
+        .move{
+            margin:10px auto;
+            width:120px;
+            text-align:center;
+            border: 3px solid #000000;
+        }
+        .repeat{
+            margin:10px auto;
+            width:150px;
+            text-align:center;
+            border: 3px solid #000000;
+        }
+    </style>
+</head>
+<body>
+    <div id="choices" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+        <div id="move" class="move" draggable="true" ondragstart="drag(event)">
+            <p>Move</p>
+            <input type="text" class="steps" value="n" style="width: 15px; display:inline-block;">
+            <p style="display:inline-block;">, </p>
+            <input type="text" class="direction" value="direction" style="width: 75px; display:inline-block;">
+        </div>
+
+        <div id="repeat" class="repeat" draggable="true" ondragstart="drag(event)">
+            <p>Repeat</p>
+            <input type="text" class="times" value="x" style="width: 15px; display:inline-block;">
+        </div>
+
+    </div>
+
+    <div id="codes" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+    <input type="button" value="submit" onclick="beginMove();" style="width: 50px;height: 30px;"></body>
+    <input type="button" value="reset" style="width: 50px;height: 30px;"></body>
+
+    <canvas id="canvas"></canvas>
+    <img src="../img/robotic-arm.png" id="roboticArm" width="32px" height="32px" style="display: none;"/>
+</body>
+</html>

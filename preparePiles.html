@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2 id="total"></h2>
+<script>
+    function createTable(tableData) {
+        var table = document.createElement('table');
+        var tableBody = document.createElement('tbody');
+
+        var rowNum=1;
+        tableData.forEach(function(rowData) {
+            var row = document.createElement('tr');
+
+            rowData.forEach(function(cellData) {
+                var cell = document.createElement('td');
+                cell.appendChild(document.createTextNode(cellData));
+                cell.setAttribute("style","border:1px solid black; width: 20px");
+
+                if(rowNum!=1){
+                    cell.onmouseover=function(){
+                        var result = [], node = this.parentNode.firstChild;
+
+                        while( node !== this ) {
+                            result.push( node );
+                            node = node.nextSibling;
+                        }
+                        result.push(this);
+
+                        var total=0;
+                        result.forEach(function(cellData){
+                            total+=parseFloat(cellData.innerHTML);
+                            cellData.style.backgroundColor="blue";
+                            cellData.style.color="white";
+                        });
+                        document.getElementById("total").innerHTML=total;
+                    };
+                    cell.onmouseout=function(){
+                        var result=row.getElementsByTagName("td");
+                        for (var i = 0; i < result.length; i++) {
+                            result[i].style.backgroundColor="white";
+                            result[i].style.color="black";
+                        }
+                    }
+                }
+
+                row.appendChild(cell);
+
+            });
+
+            rowNum+=1;
+            tableBody.appendChild(row);
+        });
+
+        table.appendChild(tableBody);
+        table.setAttribute("style","border:1px solid black; border-collapse: collapse; text-align:center");
+        document.body.appendChild(table);
+    }
+
+    createTable([["1", "2","3", "4","5", "6","7", "8","9", "10","11","12"], [2, 1.5,3, 2.5,3.5, 2,1.5, 3,2.5, 1.5,2, 3.5]]);
+</script>
+</body>
+</html>

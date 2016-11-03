@@ -2,11 +2,14 @@
  * Created by ghche on 10/2/2016.
  */
 
-var stop1=document.getElementById('QID1group0');
-var stop2=document.getElementById('QID1group1');
-var stop3=document.getElementById('QID1group2');
+var stops=document.getElementById('QID1group0');
 var n=0;
 var trials='';
+var actions='';
+var isDragging=false;
+var lastActionTime,newActionTime;
+var lastActionResult,newActionResult;
+var result=[];
 
 Qualtrics.SurveyEngine.addOnload(function()
     {
@@ -23,24 +26,48 @@ Qualtrics.SurveyEngine.addOnload(function()
         Qualtrics.SurveyEngine.setEmbeddedData('timeTest',time1);
         li1=document.getElementById('QR~QID1~1');
         //alert(li1.parentElement.id);
+        $('#QID5 > div.Inner.BorderColor.DragAndDrop > div > fieldset > div > table > tbody > tr > td.groupsContainerTd.BorderColor > div:nth-child(1)').before("<div class='Group BorderColor Columns'><div><h2 class='BorderColor'>Start from: Miami</h2><img id='miami' src='https://umiami.qualtrics.com/CP/Graphic.php?IM=IM_bggDDtFNYeHKcy9'></div></div>" );
+        $('#miami').parent().css('text-align','center');
+        $('#QID5 > div.Inner.BorderColor.DragAndDrop > div > fieldset > div > table > tbody > tr > td.groupsContainerTd.BorderColor > div:nth-child(2)').after("<div class='Group BorderColor Columns'><div><h2 class='BorderColor'>Destination: Los Angeles</h2><img id='la' src='https://umiami.qualtrics.com/CP/Graphic.php?IM=IM_3h2SHP8gOi3GFI9'></div></div>" );
+        $('#la').parent().css('text-align','center');
+        $( ".ui-sortable-handle" ).mousedown(function() {
+            isDragging = false;
+        }).mousemove(function() {
+            isDragging = true;
+        }).mouseup(function() {
+            newActionTime = new Date();
+            result=[]
+            $( "#QID5group0 li" ).each(function( index ) {
+                result.push(getNameId($( this ).attr('id')));
+            });
+            newActionResult=result;
+            actions+= ' '+lastActionTime+' '+lastActionResult+'//';
+            lastActionTime=newActionTime;
+            lastActionResult=newActionResult;
+            Qualtrics.SurveyEngine.setEmbeddedData('actionTest', actions);
+            console.log(actions);
+        });
     }
 );
+
+
+
 
 test=function(){
     //alert('clicked');
     var label1,label2,label3;
-    if (stop1.children[0]!=undefined){
-        var labelId1=document.getElementById(getLabelId(stop1.children[0].id));
-        label1=labelId1.children[0].innerHTML;
-    }
-    //alert(labelId1.children[0].innerHTML);
-    if (stop2.children[0]!=undefined){
-        var labelId2=document.getElementById(getLabelId(stop2.children[0].id));
-        label2=labelId2.children[0].innerHTML;
-    }
-    if (stop3.children[0]!=undefined){
-        var labelId3=document.getElementById(getLabelId(stop3.children[0].id));
-        label3=labelId3.children[0].innerHTML;
+    var label=[];
+    $( "#QID5group0 li" ).each(function( index ) {
+        label.push(getNameId($( this ).attr('id')));
+    });
+
+    if (label.length==1){
+        label1=label[0];
+        label2='Los Angeles';
+    }else if(label.length==2){
+        label1=label[0];
+        label2=label[1];
+        label3='Los Angeles';
     }
 
     if (label1=='Houston' && label2=='Los Angeles'){
@@ -66,25 +93,14 @@ test=function(){
 
 }
 
-getLabelId=function(id){
-    if (id=='QR~QID1~1'){
-        return 'QID1-1-label';
+getNameId=function(id){
+    if (id=='QR~QID5~1'){
+        return 'Phoenix';
     }
-    if (id=='QR~QID1~2'){
-        return 'QID1-2-label';
+    if (id=='QR~QID5~2'){
+        return 'Houston';
     }
-    if (id=='QR~QID1~3'){
-        return 'QID1-3-label';
-    }
-    if (id=='QR~QID1~4'){
-        return 'QID1-4-label';
+    if (id=='QR~QID5~3'){
+        return 'Dallas';
     }
 }
-
-
-
-
-
-
-
-

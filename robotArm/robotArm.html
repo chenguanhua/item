@@ -52,7 +52,7 @@
             <input type="text" class="direction" value="direction" style="width: 75px; display:inline-block;">
         </div>
 
-        <div id="repeat" class="repeat" draggable="true" ondragstart="drag(event)">
+        <div id="repeat" class="repeat" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
             <p>Repeat</p>
             <input type="text" class="times" value="x" style="width: 15px; display:inline-block;">
         </div>

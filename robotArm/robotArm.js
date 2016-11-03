@@ -2,6 +2,7 @@
  * Created by ghche on 10/9/2016.
  */
 var moveId=1;
+var repeatId=1;
 
 var directions=["F","B","L","R"];
 
@@ -19,21 +20,35 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData("info", [ev.target.id,ev.target.className,ev.target.parentNode.id]);
 }
 
 function drop(ev) {
     ev.preventDefault();
+    var data = ev.dataTransfer.getData("info").split(',');;
     if (ev.target.id=="codes") {
-        var data = ev.dataTransfer.getData("text");
-        var clone=document.getElementById(data).cloneNode(true);
-        clone.id="move"+moveId;
-        moveId+=1;
-        ev.target.appendChild(clone);
-    }else{
-        var data = ev.dataTransfer.getData("text");
-        document.getElementById(data).remove();
+        createBox(data,ev);
+    }else if (ev.target.id=="choices"){
+        document.getElementById(data[0]).remove();
+    }else if (ev.target.id=="repeat"){
+        if (data[1]!="repeat"){
+            if (document.getElementById(data[0])=="move"){
+                createBox(data,ev);
+            }
+        }
     }
+}
+
+function createBox(data,ev){
+    var clone=document.getElementById(data[1]).cloneNode(true);
+    if (data[1]=="move") {
+        clone.id = "move" + moveId;
+        moveId += 1;
+    }else{
+        clone.id = "repeat" + repeatId;
+        repeatId += 1;
+    }
+    ev.target.appendChild(clone);
 }
 
 function beginMove(){
